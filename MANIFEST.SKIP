@@ -88,6 +88,6 @@ test.pl
 
 POD_TEMPLATE.pod
 
-^symbol*
+^Symbol-Move*
 
 ^profiling/

@@ -9,6 +9,6 @@ Build
 _build
 cover_db/
 MYMETA.*
-/symbol*/
+/Symbol-Move*/
 /.build
 TODO

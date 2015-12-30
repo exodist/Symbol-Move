@@ -31,7 +31,7 @@ time. The symbol can be in the current package or any arbitrary packages.
 
 =head1 SYNOPSYS
 
-    use Symbol::Move(
+    use Symbol::Delete(
         'foo'           # Remove the sub 'foo' from the current package
         '%A::B::foo'    # Remove the hash 'foo' from the A::B package
         '@A::B::bar',   # Remove the array 'bar from the A::B package
@@ -39,7 +39,7 @@ time. The symbol can be in the current package or any arbitrary packages.
 
 =head1 USAGE
 
-    use Symbol::Move $SYMBOL, $SYMBOL2, ...;
+    use Symbol::Delete $SYMBOL, $SYMBOL2, ...;
 
 C<$SYMBOL> must be a string identifying the symbol. The symbol string must
 include the sigil unless it is a subroutine. You can provide a fully qualified

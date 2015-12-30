@@ -2,6 +2,8 @@ package Symbol::Alias;
 use strict;
 use warnings;
 
+our $VERSION = '0.000002';
+
 use Symbol::Methods;
 
 sub import {

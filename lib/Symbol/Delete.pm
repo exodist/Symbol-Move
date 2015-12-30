@@ -2,7 +2,7 @@ package Symbol::Delete;
 use strict;
 use warnings;
 
-our $VERSION = '0.000001';
+our $VERSION = '0.000002';
 
 use Symbol::Methods;
 

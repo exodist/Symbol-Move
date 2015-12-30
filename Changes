@@ -1,5 +1,8 @@
 {{$NEXT}}
 
+    - Fix #1 (doc changes)
+    - Improve imported scalar detection
+
 0.000001  2015-12-25 22:41:57-08:00 America/Los_Angeles
 
     - Initial Release

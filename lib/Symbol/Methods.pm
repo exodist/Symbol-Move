@@ -5,7 +5,7 @@ use warnings;
 use Carp qw/croak/;
 use B;
 
-our $VERSION = '0.000001';
+our $VERSION = '0.000002';
 our @CARP_NOT = (
     'Symbol::Alias',
     'Symbol::Delete',

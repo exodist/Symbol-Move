@@ -105,13 +105,27 @@ sub _get_glob {
 
 sub _get_ref {
     my ($sym, $globref) = @_;
-    $globref ||= _get_glob($sym);
+
+    unless($sym->{NO_CHECK_STASH}) {
+        my $stash = _get_stash($sym);
+        return undef unless exists $stash->{$sym->{name}};
+
+        $globref = _get_glob($sym);
+    }
+
+    croak "You must pass in a globref for this usage" unless $globref;
+
     my $type = $sym->{type};
 
     return *{$globref}{$type} if $type ne 'SCALAR' && defined(*{$globref}{$type});
 
     if ($] < 5.010) {
-        return *{$globref}{$type} if eval { defined(${ *{$globref}{$type} }) };
+        unless ($sym->{NO_CHECK_STASH}) {
+            local $@;
+            local $SIG{__WARN__} = sub { 1 };
+            return *{$globref}{$type} if eval "package $sym->{pkg}; my \$y = $sym->{sigil}$sym->{name}; 1";
+        }
+        return *{$globref}{$type} if defined(*{$globref}{$type}) && defined(${*{$globref}{$type}});
         return undef;
     }
 
@@ -136,7 +150,7 @@ sub _purge_symbol {
 
     for my $type (qw/CODE SCALAR HASH ARRAY FORMAT IO/) {
         next if $type eq $sym->{type};
-        my $ref = _get_ref({type => $type}, \*GLOBCLONE) || next;
+        my $ref = _get_ref({type => $type, NO_CHECK_STASH => 1}, \*GLOBCLONE) || next;
         *$new_glob = $ref;
     }
 

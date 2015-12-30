@@ -7,6 +7,7 @@ use Symbol::Methods;
 BEGIN {
     package AAA;
 
+    use vars qw/$aaai/;
     sub aaa { 'aaa' }
     our $aaa = 'aaa';
     our @aaa = ('a', 'a', 'a');
@@ -31,6 +32,7 @@ ok(AAA->symbol::exists('&aaa'), 'AAA has &aaa');
 ok(AAA->symbol::exists('$aaa'), 'AAA has $aaa');
 ok(AAA->symbol::exists('@aaa'), 'AAA has @aaa');
 ok(AAA->symbol::exists('%aaa'), 'AAA has %aaa');
+ok(AAA->symbol::exists('$aaai'), 'AAA has $aaai (imported var test)');
 
 ok(!AAA->symbol::exists('&bbb'), 'AAA does not have &bbb');
 ok(!AAA->symbol::exists('$bbb'), 'AAA does not have $bbb');
@@ -79,16 +81,16 @@ ok(!CCC->symbol::exists('$ccc'), "removed the symbol");
 
     AAA->symbol::alias('aaa', 'aaa2');
     is(\&AAA::aaa, \&{'AAA::aaa2'}, "aliased the sub");
-    
+
     AAA->symbol::alias('$aaa', '$aaa2');
     is(\$AAA::aaa, \${'AAA::aaa2'}, "aliased the scalar");
-    
+
     AAA->symbol::alias('$aaa', 'aaa2x');
     is(\$AAA::aaa, \${'AAA::aaa2x'}, "aliased the scalar, no sigil on second name");
 
     AAA->symbol::alias('%aaa', '%aaa2');
     is(\%AAA::aaa, \%{'AAA::aaa2'}, "aliased the hash");
-    
+
     AAA->symbol::alias('@aaa', '@aaa2');
     is(\@AAA::aaa, \@{'AAA::aaa2'}, "aliased the array");
 
@@ -104,15 +106,15 @@ ok(!CCC->symbol::exists('$ccc'), "removed the symbol");
     AAA->symbol::move('aaa2', 'aaa3');
     is(\&AAA::aaa, \&{'AAA::aaa3'}, "moved the sub");
     ok(!AAA->symbol::exists('aaa2'), "removed symbol");
-    
+
     AAA->symbol::move('$aaa2', '$aaa3');
     is(\$AAA::aaa, \${'AAA::aaa3'}, "moved the scalar");
     ok(!AAA->symbol::exists('$aaa2'), "removed symbol");
-    
+
     AAA->symbol::move('%aaa2', '%aaa3');
     is(\%AAA::aaa, \%{'AAA::aaa3'}, "moved the hash");
     ok(!AAA->symbol::exists('%aaa2'), "removed symbol");
-    
+
     AAA->symbol::move('@aaa2', '@aaa3');
     is(\@AAA::aaa, \@{'AAA::aaa3'}, "moved the array");
     ok(!AAA->symbol::exists('@aaa2'), "removed symbol");
